@@ -1,25 +1,29 @@
-// Define some global variables (these shuld NEVER be modified after being decleared).
-global.__rootdir = __dirname
+// set enviromental variables
+require('dotenv').config();
 
-// Set enviromental flags.
-require('dotenv').config()
+// define the root directory of the application (this is a global variable and should not be reassigned)
+global.__rootdir = __dirname;
 
-// Require node modules.
-const Discord = require('discord.js')
-const path = require('path')
-const recursive = require('recursive-readdir')
+// get dependecies
+const path = require('path');
+const Discord = require('discord.js');
+const recursive = require('recursive-readdir');
 
-// Create the discord client.
-const client = new Discord.Client()
+// define the discord client
+const client = new Discord.Client();
 
-// Run the setup function.
-require(path.join(__rootdir, 'functions/setupFunction')).setupFunction(client)
+// define the functions that should run on start
+const bootScripts = [
+  require(path.join(__rootdir, 'functions/setupEvents')),
+  require(path.join(__rootdir, 'functions/setupCommands')),
+];
 
-// List all the events the client should listen to.
-client.on(`ready`, () => client.events.get('ready').exec(client))
-client.on('message', (message) => client.events.get('message').exec(client, message))
-client.on('guildCreate', (guild) => client.events.get('guildCreate').exec(client, guild))
-client.on('error', (err) => client.events.get('error').exec(client, error))
+// then run the functions
+for (bootScript of bootScripts) bootScript(client);
 
-// Log the client in with the specified token.
-client.login(process.env.TOKEN)
+// list events to listen to (allways send the client)
+client.on('ready', ()           => client.events.get('ready')(client));
+client.on('message', (message)  => client.events.get('message')(client, message));
+
+// log the client in to discord
+client.login(process.env.D_TOKEN);

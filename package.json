@@ -1,17 +1,16 @@
 {
-  "name": "",
-  "version": "1.0.0",
-  "description": "",
+  "name": "discord-base",
+  "version": "0.0.1",
+  "description": "Basic template for a discord bot.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "github:discordjs/discord.js",
     "dotenv": "^8.0.0",
-    "mongoose": "^5.6.5",
     "recursive-readdir": "^2.2.2"
   }
 }
