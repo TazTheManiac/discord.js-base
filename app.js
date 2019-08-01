@@ -22,8 +22,8 @@ const bootScripts = [
 for (bootScript of bootScripts) bootScript(client);
 
 // list events to listen to (allways send the client)
-client.on('ready', ()           => client.events.get('ready')(client));
-client.on('message', (message)  => client.events.get('message')(client, message));
+client.on('ready', () => client.events.get('ready')(client));
+client.on('message', (message) => client.events.get('message')(client, message));
 
 // log the client in to discord
 client.login(process.env.D_TOKEN);
